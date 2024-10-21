@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'info.solidsoft.pitest' version '1.6.0'
+    id 'groovy'
+
+
+}
+
+group 'com.bmcl.numbers'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+  testImplementation 'org.mockito:mockito-core:3.+'
+    testImplementation 'org.spockframework:spock-core:2.1-groovy-3.0'
+    testImplementation 'org.spockframework:spock-spring:2.1-groovy-3.0' // Caso uses Spring
+}
+
+
+test {
+    useJUnitPlatform()
+}
+
+pitest {
+    junit5PluginVersion = '0.12'  // Define a versão do plugin JUnit 5 para o PIT
+    targetClasses = ['com.bmcl.numbers.*']  // Define as classes alvo dos testes de mutação (normalmente são as classes do teu código principal)
+    targetTests = ['com.bmcl.numbers.*Test']  // Define as classes de teste (classes com testes unitários)
+    threads = 4  // Número de threads a usar para paralelizar os testes de mutação
+}
